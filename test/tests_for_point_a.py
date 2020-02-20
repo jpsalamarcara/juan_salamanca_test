@@ -2,7 +2,7 @@ import unittest
 from juan.point_a import check_overlap
 
 
-def swap(vector: tuple):
+def swap(vector: tuple) -> tuple:
     return tuple((vector[1], vector[0]))
 
 
