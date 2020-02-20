@@ -26,7 +26,7 @@ def check_residual(version1: list, version2: list) -> tuple:
 
 def check_version(version1: str, version2: str) -> tuple:
     assert re.match(version_pattern, version1), assertion_message.format('version1', version_pattern)
-    assert re.match(version_pattern, version2), assertion_message.format('version1', version_pattern)
+    assert re.match(version_pattern, version2), assertion_message.format('version2', version_pattern)
     version1 = version1.split('.')
     version2 = version2.split('.')
     for (v1, v2) in zip(version1, version2):
