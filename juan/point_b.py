@@ -3,12 +3,13 @@ import re
 version_pattern = r'^[0-9]+(\.[0-9]+)*[ab]?$'
 alpha_beta_subversion_pattern = r'^[0-9]+[ab]{1}$'
 assertion_message = '{} must have a pattern like: {}'
+literal_decoder = {'a': -0.2, 'b': -0.1}
 
 
 def decode_value(code):
     if re.match(alpha_beta_subversion_pattern, code):
         value = int(code[:-1])
-        value = value - 0.2 if code[-1] == 'a' else value - 0.1
+        value = value + literal_decoder[code[-1]]
         return value
     else:
         return int(code)
