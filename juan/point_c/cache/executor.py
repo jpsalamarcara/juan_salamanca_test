@@ -1,7 +1,5 @@
 import base64
 
-from werkzeug.exceptions import abort
-
 from juan.point_c.common import handle_generic_error
 from juan.point_c.cache.config import logger
 
@@ -36,7 +34,7 @@ def handle_errors(error):
     return handle_generic_error(error, logger, debug=debug)
 
 
-@app.route("/v1/cache/status", methods=['GET', ])
+@app.route("/v1/caches/status", methods=['GET', ])
 @cross_origin()
 def get_index():
     status = get_db_status()
@@ -44,12 +42,13 @@ def get_index():
     return jsonify(output)
 
 
-@app.route("/v1/cache/<key>", methods=['GET', ])
+@app.route("/v1/caches/<key>", methods=['GET', ])
 @cross_origin()
 def get_object(key):
     row = redis_connection.hgetall(key)
     if row is None:
-        abort(404)
+        return Response(response='Key not found',
+                        status=200)
     else:
         redis_connection.expire(key, expire_time)
         response = Response(
@@ -58,7 +57,7 @@ def get_object(key):
         return response
 
 
-@app.route("/v1/cache", methods=['POST', ])
+@app.route("/v1/caches", methods=['POST', ])
 @cross_origin()
 def put_object():
     data = request.data
