@@ -25,8 +25,10 @@ def config_env():
 
     logger.info('BASEDIR: {}'.format(basedir))
     config_env_var('REDIS_HOST', 'localhost')
-    config_env_var('REDIS_USER', '')
-    config_env_var('REDIS_PWD', '')
+    config_env_var('LAT_LONG', '25.759557, -80.374231')
+    config_env_var('REGION', 'florida')
+    config_env_var('EXPIRE_TIME', '3600')
+    config_env_var('ROUTER_HOST', 'localhost:8080')
     config_env_var('DEBUG', '1')
 
 
