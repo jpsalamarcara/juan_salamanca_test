@@ -62,7 +62,7 @@ def add_cache_region():
         row[field] = data[field]
     redis_connection.geoadd(routes_key, row['long'], row['lat'], row['region'])
     redis_connection.hmset(row['region'], row)
-    return Response(status=200)
+    return Response(status=201)
 
 
 if __name__ == '__main__':

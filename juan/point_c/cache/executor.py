@@ -36,7 +36,7 @@ def handle_errors(error):
 
 @app.route("/v1/caches/status", methods=['GET', ])
 @cross_origin()
-def get_index():
+def get_status():
     status = get_db_status()
     output = {'db': status, 'version': app_version, 'region': region, 'lat_long': lat_long}
     return jsonify(output)
@@ -46,9 +46,9 @@ def get_index():
 @cross_origin()
 def get_object(key):
     row = redis_connection.hgetall(key)
-    if row is None:
+    if row is None or row == {}:
         return Response(response='Key not found',
-                        status=200)
+                        status=404)
     else:
         redis_connection.expire(key, expire_time)
         response = Response(

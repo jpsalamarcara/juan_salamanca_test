@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 docker pull redis:5.0.7
 
 docker network create mycompany.com
