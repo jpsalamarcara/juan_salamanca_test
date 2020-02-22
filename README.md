@@ -53,5 +53,43 @@ For example `'10.1.3a'` is a valid version code
 
 
 ## Question C
+We want to optimize every bits of software we write. Your goal is to write a new library that can be integrated to our stack. Dealing with network issues everyday, latency is our biggest problem. Thus, your challenge is to write a new Geo Distributed LRU (Least Recently Used) cache with time expiration. This library will be used extensively by many of our services so it needs to meet the following criteria:
+1 - Simplicity. Integration needs to be dead simple.
+2 - Resilient to network failures or crashes.
+3 - Near real time replication of data across Geolocation. Writes need to be in real time. 4 - Data consistency across regions
+5 - Locality of reference, data should almost always be available from the closest region 6 - Flexible Schema
+7 - Cache can expire
+
 [Solution](/juan/point_c/)
+
+[Tests](/test/tests_for_point_c.py)
+
+#### Examples
+
+a. Get the nearest region cache end-point which distance is less than 600 km from a geo-location (lat, long)
+```bash
+curl -X GET "http://localhost:8080/v1/routes?lat=38.561387&long=-121.498287&radius=600&unit=km"
+```
+response must come in json format with details such as region name, lat, long and url to access
+
+
+b. Add a new cache region end-point to the routes micro-service
+```bash
+curl -H "Content-Type: application/json" -d '{"region": "AU", "lat": "-37.810745", "long": "144.965207", "url": "http://au.mycompany.com/v1/caches"}' -X POST "http://localhost:8080/v1/routes"
+```
+
+c. Put a object to a cache region with key `juan` and content body `{"name": "juan", "id": "1000"}`
+```bash
+curl -H "Content-Type: application/json" -H "X-Key: juan" -d '{"name": "juan", "id": "1000"}' -X POST "http://localhost:8181/v1/caches"
+```
+If the key already exists, the object will be overwritten with the new content.
+
+
+d. Retrieve the object with key `juan` from a given region cache end-point
+```bash
+curl  -X GET "http://localhost:8181/v1/caches/juan"
+```
+The retrieved object must come with the same content-type as it was posted originally
+
+#### Developer Observations
 
