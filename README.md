@@ -75,10 +75,15 @@ After retrieving a region cache end-point, the user will send their objects to i
 Criteria compliance:
 
 *Simplicity*: As simple as send a rest api request over HTTP
+
 *Resilient*: Resilient to crashes by its error handler design, but not resilient to network failures at request-response time. It could be solved with an event broker such as RabbitMQ, but in a next time.
+
 *Near real time replication* of data across geolocation  & *Data consistency across regions*: Every cache region end-point is backed by a redis database which one is capable of cluster deployment bringing consistency and high availability.
+
 *Locality of reference*: Every cache region must be deployed over an independent network location.
+
 *Flexible Schema*: The cache admin can add as many regions as possible to the routes app
+
 *Cache can expire*: Cache expire time must be configured as a OS Environment variable at deployment time.
 
 
