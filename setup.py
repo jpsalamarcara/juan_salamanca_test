@@ -2,7 +2,7 @@ import setuptools
 import os
 
 REQUIRED = [
-    'flask==1.0.2', 'python-dateutil', 'flask-cors', 'hiredis'
+    'flask==2.3.2', 'python-dateutil', 'flask-cors', 'hiredis'
 ]
 
 with open('README.md') as f:
